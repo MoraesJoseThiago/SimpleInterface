@@ -5,19 +5,24 @@ import {
   Text,
   Button,
 } from 'react-native';
-
+{/* STATE É MUTAVEL E O PROPS É UMA CARACTERISTICA IMUTAVEL*/}
 const App = () => {
-  const [counter, setCounter] = useState(0);
+  const [name, setName] = useState('Salvador')
+  const [session, setSession] = useState({ number: 6, title: 'Velozes e Furiosos' })
+  const [current, setCurrent] = useState(true)
 
   const onClickHandler = () => {
-    setCounter(counter + 1)
+    setName('Paul')
+    setSession({ number: 7, title: 'Desafio em Tokio' })
+    setCurrent(false)
   }
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>{counter * 5}</Text>
-      <Button style={styles.button} title='Adicionar 5' onPress={onClickHandler}></Button>
-      <Text style={styles.text}>Você clicou {counter} vezes</Text>
+      <Text style={styles.text}>Bem vindo Demon {name}</Text>
+      <Text style={styles.text}>Vai ver um filme na sessão {session.number} sobre {session.title}</Text>
+      <Text style={styles.text}>{current ? 'Sessão acontecendo' : 'proxima sessão'}</Text>
+      <Button title='Não sou eu garaio' onPress={onClickHandler}></Button>
     </View>
   );
 };
@@ -25,7 +30,7 @@ const App = () => {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    backgroundColor: '#0726D9',
+    backgroundColor: '#0000ff',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -34,10 +39,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontStyle: 'italic',
     margin: 10,
-  },
-  button: {
-    width: 100,
-    height: 100,
   },
 });
 
