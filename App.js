@@ -5,24 +5,19 @@ import {
   Text,
   Button,
 } from 'react-native';
-{/* STATE É MUTAVEL E O PROPS É UMA CARACTERISTICA IMUTAVEL*/}
+
 const App = () => {
-  const [name, setName] = useState('Salvador')
-  const [session, setSession] = useState({ number: 6, title: 'Velozes e Furiosos' })
-  const [current, setCurrent] = useState(true)
+  const [fofoca, setFofoca] = useState('Me atualize')
 
   const onClickHandler = () => {
-    setName('Paul')
-    setSession({ number: 7, title: 'Desafio em Tokio' })
-    setCurrent(false)
+    setFofoca('O Julio e chato pra crl!')
   }
 
   return (
     <View style={styles.body}>
-      <Text style={styles.text}>Bem vindo Demon {name}</Text>
-      <Text style={styles.text}>Vai ver um filme na sessão {session.number} sobre {session.title}</Text>
-      <Text style={styles.text}>{current ? 'Sessão acontecendo' : 'proxima sessão'}</Text>
-      <Button title='Não sou eu garaio' onPress={onClickHandler}></Button>
+      <Text style={styles.text}>Já esta sabendo da fofoca?</Text>
+      <Text style={styles.text}>{fofoca}</Text>
+      <Button title='Me conta a fofoca' onPress={onClickHandler}></Button>
     </View>
   );
 };
