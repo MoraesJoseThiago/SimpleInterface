@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,70 +6,45 @@ import {
   ScrollView,
   RefreshControl,
 } from 'react-native';
+import { FlatList } from 'react-native';
+import { useEffect } from 'react/cjs/react.production.min';
 
 const App = () => {
-
-  const [Items, setItems] = useState([
-    { key: 0, item: 'Carros JDM' },
-    { key: 1, item: 'R34' },
-    { key: 2, item: 'R32' },
-    { key: 3, item: 'Subaru Impreza' },
-    { key: 4, item: 'Toyota Supra' },
-    { key: 5, item: 'S14' },
-    { key: 6, item: 'Lancer Evolution IV' },
-    { key: 7, item: 'MAZADA MIX' },
-    { key: 8, item: 'Honda Civic' },
-    { key: 9, item: 'Honda / Acura NSX' },
-  ]);
-  const [Refreshing, setRefreshing] = useState(false);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    setItems([...Items, { key: 77, item: 'item novo' }]);
-    setRefreshing(false);
-  }
-  return (
-    <ScrollView
-      style={styles.body}
-      refreshControl={
-        <RefreshControl
-          refreshing={Refreshing}
-          onRefresh={onRefresh}
-          colors={['#ff00ff']}
-        />
-      }
-    >
-      {
-        Items.map((object) => {
-          return (
-            <View style={styles.item} key={object.key}>
-              <Text style={styles.text}>{object.item}</Text>
-            </View>
-          )
+  const[pokemon, setPokemon] = useState([])
+    useEffect(() => {
+      fetch('https://pokeapi.co/api/v2/pokemon',{
+        method: 'GET',
+        headers:{
+          'Accept': 'application/json'
+        }
+      })
+        .then(response => response.json())
+        .then(data=>{
+          console.log(data)
+          setPokemon(data.results)
         })
-      }
-    </ScrollView>
-  );
+    },[])
+    return(
+      <View>
+        <FlatList
+          data={pokemons}
+          keyExtracton={(pokemon)=>pokemon.name}
+          contentContainerStylee={{flexGrow: 1}}
+          renderItem={PokemonShow}
+        />
+      </View>
+    )
 };
 
-const styles = StyleSheet.create({
-  body: {
-    flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#000',
-  },
-  item: {
-    margin: 10,
-    backgroundColor: '#aab',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  text: {
-    color: '#000000',
-    fontSize: 45,
-    fontStyle: 'italic',
-    margin: 10,
-  },
-});
+function PokemonShow(item){
+  const{name,url} = item.item
+  const pokemonNumber = url.replace('https://pokeapi.co/api/v2/pokemon', '')
 
-export default App;
+  const ImageUrl = 'https://cdn.traction.one/pokedex/pokemon'+ pokemonNumber+'.png'
+  return(
+  <View style={{flexDirection: 'row'}}>
+    <Nome>{name}</Nome>
+    <Imagem source={{ url: ImageUrl.replace('/.png','.png')}}/>
+    </View>
+  )
+}
