@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {SafeAreaView, View,FlatList,Image,Text, StyleSheet} from 'react-native'
+import styled from 'styled-components/native'
 export default function App(){
   const [allMovies,setAllMovie] = useState([])
   useEffect(()=>{
@@ -22,10 +23,12 @@ export default function App(){
   },[])
   return(
     <View style={styles.body}>
-      <Text> Ghibli Movies </Text>
+      <TextoPrincipal style={styles.TextoPrincipal}> Ghibli Movies </TextoPrincipal>
       <FlatList
         data={allMovies}
         renderItem={({item})=>
+        <>
+        <Quadro style={styled.body}>
         <View>
           <Text style={styles.Text}>{item.title}</Text>
           <Image
@@ -33,11 +36,30 @@ export default function App(){
             source={{uri: item.image}}
           />
         </View>
+        </Quadro>
+        </>
         }
       />
     </View>
   )   
 }
+
+const TextoPrincipal = styled.Text`
+  font-size: 44px;
+  color: #fff;
+  margin-bottom: 25px;
+  margin-top:25;
+
+`; 
+
+const Quadro = styled.View `
+  background-color: #0A1073;
+`;
+
+TextoPrincipal:{
+  FontFamily: 'Roboto-BlackItalic'
+}
+
 
 const styles = StyleSheet.create ({
   body: {
